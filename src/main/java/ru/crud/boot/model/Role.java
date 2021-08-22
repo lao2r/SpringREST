@@ -7,13 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Table(name = "roles")
 @Entity
 @Getter
 @Setter
-
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +20,6 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "name", unique = true)
     private String name;
-
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "roles_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
-    private Set<User> users;
 
     public Role() {
     }

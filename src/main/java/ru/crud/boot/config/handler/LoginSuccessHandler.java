@@ -2,6 +2,7 @@ package ru.crud.boot.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -22,10 +23,9 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             setDefaultTargetUrl("/admin");
         } else if (roles.contains("ROLE_USER")) {
             setDefaultTargetUrl("/user");
-        } else {
-            setDefaultTargetUrl("/");
         }
 
-        super.onAuthenticationSuccess(request, response, authentication);
+            super.onAuthenticationSuccess(request, response, authentication);
+        }
     }
-}
+

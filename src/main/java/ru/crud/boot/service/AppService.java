@@ -56,6 +56,13 @@ public class AppService implements UserDetailsService {
     }
 
     public boolean saveUser(User user) {
+       String oldPassword = userRepository.findById(user.getId()).get().getPassword();
+       String newPassword = user.getPassword();
+
+        if (!oldPassword.equals(newPassword)) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         user.setEnabled(true);
         userRepository.save(user);
         return true;

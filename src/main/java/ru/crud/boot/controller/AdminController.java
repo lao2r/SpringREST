@@ -48,6 +48,7 @@ public class AdminController {
 
     @GetMapping("/user-update/{id}")
     public String updateUserForm(@PathVariable(value = "id", required = true) Long id, Model model) {
+        System.out.println("Get mapping update page");
         User user = appService.findUserById(id);
         List<Role> listRoles = appService.findAllRoles();
 
@@ -57,8 +58,7 @@ public class AdminController {
     }
 
     @PostMapping("/user-update")
-    public String updateUser(@RequestParam("rolesId") List<Long> rolesId, User user) {
-        setUserId(user);
+    public String updateUser(@RequestParam("rolesId") List<Long> rolesId, @ModelAttribute User user) {
         Set<Role> roles = new HashSet<>();
 
         for (Long role : rolesId) {
@@ -67,6 +67,7 @@ public class AdminController {
 
         user.setRoles(roles);
         appService.saveUser(user);
+        System.out.println("I'm here");
         return "redirect:/admin";
     }
 
