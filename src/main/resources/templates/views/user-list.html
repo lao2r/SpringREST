@@ -32,7 +32,11 @@
             <td th:text="${user.firstName}">First Name</td>
             <td th:text="${user.lastName}">Last Name</td>
             <td th:text="${user.email}">Email</td>
-            <td th:each="role : *{user.getRoles()}" th:text="${role.getName().toString()}">Role 1</td>
+            <td>
+                <th:block th:each="role : ${user.roles}">
+                    &nbsp;<span th:text="${role.name.substring(5)}"></span>
+                </th:block>
+            </td>
             <td>
                 <form th:method="GET" th:action="@{admin/user-update/{id}(id=${user.getId()})}">
                     <input th:type="submit" value="Edit">

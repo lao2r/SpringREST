@@ -31,7 +31,6 @@ public class AdminController {
     @GetMapping("/user-create")
     public String createUserForm(@ModelAttribute("user") User user) {
         return "/user-create";
-
     }
 
     @PostMapping("/user-create")

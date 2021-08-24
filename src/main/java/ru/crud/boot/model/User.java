@@ -97,4 +97,6 @@ public class User implements UserDetails {
     public int hashCode() {
         return 562048007;
     }
+
+
 }
