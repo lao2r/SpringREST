@@ -37,6 +37,17 @@
                 </label></td>
             </tr>
             <tr>
+                <td>Roles:</td>
+                <td colspan="2">
+                    <select th:name="rolesId" multiple="multiple">
+                        <option th:each="role : ${listRoles}"
+                                th:value="${role.id}"
+                                th:selected="${role.getName().equals('ROLE_USER')}"
+                                th:text="${role.getName().substring(5)}">
+                        </option>
+                    </select>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <button type="submit">Register</button>
                     <a style="margin-left:84px" href="/logout">Back to login page</a>

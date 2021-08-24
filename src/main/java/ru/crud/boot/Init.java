@@ -3,8 +3,9 @@ package ru.crud.boot;
 
 import ru.crud.boot.model.Role;
 import ru.crud.boot.model.User;
-import ru.crud.boot.service.AppService;
 import org.springframework.stereotype.Component;
+import ru.crud.boot.service.RoleService;
+import ru.crud.boot.service.UserService;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -14,20 +15,22 @@ import java.util.Set;
 
 public class Init {
 
-    private final AppService appService;
+    private final RoleService roleService;
+    private final UserService userService;
 
-    public Init(AppService appService) {
-        this.appService = appService;
+    public Init(RoleService roleService, UserService userService) {
+        this.roleService = roleService;
+        this.userService = userService;
     }
 
     @PostConstruct
-    public void loadData() {
+    public void init() {
 
         Role admin = new Role("ROLE_ADMIN");
         Role user = new Role("ROLE_USER");
 
-        appService.saveRole(admin);
-        appService.saveRole(user);
+        roleService.saveRole(admin);
+        roleService.saveRole(user);
 
         Set<Role> allAccess = new HashSet<>();
         Set<Role> userAccess = new HashSet<>();
@@ -43,10 +46,15 @@ public class Init {
         User user4 = new User("Oleg", "Makarov", "oleg.makarov@gmail.com", "ghbdtn123", true);
         User user5 = new User("Igor", "Medvedev", "igor.medvedev@gmail.com", "drowssap", true);
 
-        appService.registerAdmin(user1);
-        appService.registerDefaultUser(user2);
-        appService.registerDefaultUser(user3);
-        appService.registerDefaultUser(user4);
-        appService.registerDefaultUser(user5);
+        user1.setRoles(allAccess);
+        user2.setRoles(userAccess);
+        user3.setRoles(userAccess);
+        user4.setRoles(userAccess);
+        user5.setRoles(userAccess);
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+        userService.saveUser(user3);
+        userService.saveUser(user4);
+        userService.saveUser(user5);
     }
 }

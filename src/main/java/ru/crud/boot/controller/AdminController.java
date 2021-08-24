@@ -2,10 +2,11 @@ package ru.crud.boot.controller;
 
 import ru.crud.boot.model.Role;
 import ru.crud.boot.model.User;
-import ru.crud.boot.service.AppService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.crud.boot.service.RoleService;
+import ru.crud.boot.service.UserService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,41 +16,51 @@ import java.util.Set;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AppService appService;
+    private final UserService userService;
+    private final RoleService roleService;
 
-    public AdminController(AppService appService) {
-        this.appService = appService;
+    public AdminController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("")
     public String findAll(Model model){
-        List<User> users = appService.findAllUsers();
-        model.addAttribute("users", appService.findAllUsers());
+        model.addAttribute("users", userService.findAllUsers());
         return "/user-list";
     }
 
     @GetMapping("/user-create")
-    public String createUserForm(@ModelAttribute("user") User user) {
+    public String createUserForm(@ModelAttribute("user") User user, Model model) {
+        List<Role> listRoles = roleService.findAllRoles();
+
+        model.addAttribute("listRoles", listRoles);
         return "/user-create";
     }
 
     @PostMapping("/user-create")
-    public String createUser(User user) {
-        appService.registerDefaultUser(user);
+    public String createUser(@RequestParam("rolesId") List<Long> rolesId, User user) {
+        Set<Role> roles = new HashSet<>();
+
+        for (Long role : rolesId) {
+            roles.add(roleService.findRoleById(role));
+        }
+
+        user.setRoles(roles);
+        userService.saveUser(user);
         return "redirect:/admin";
     }
 
     @DeleteMapping("/user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-        appService.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/admin";
     }
 
     @GetMapping("/user-update/{id}")
     public String updateUserForm(@PathVariable(value = "id", required = true) Long id, Model model) {
-        System.out.println("Get mapping update page");
-        User user = appService.findUserById(id);
-        List<Role> listRoles = appService.findAllRoles();
+        User user = userService.findUserById(id);
+        List<Role> listRoles = roleService.findAllRoles();
 
         model.addAttribute("user", user);
         model.addAttribute("listRoles", listRoles);
@@ -61,18 +72,18 @@ public class AdminController {
         Set<Role> roles = new HashSet<>();
 
         for (Long role : rolesId) {
-            roles.add(appService.findRoleById(role));
+            roles.add(roleService.findRoleById(role));
         }
 
         user.setRoles(roles);
-        appService.saveUser(user);
+        userService.updateUser(user);
         System.out.println("I'm here");
         return "redirect:/admin";
     }
 
     private void setUserId(User user) {
         for (Role role : user.getRoles()) {
-            role.setId(appService.findRoleByName(role.getName()).getId());
+            role.setId(roleService.findRoleByName(role.getName()).getId());
         }
     }
 }

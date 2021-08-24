@@ -1,7 +1,6 @@
 package ru.crud.boot.config;
 
 import ru.crud.boot.config.handler.LoginSuccessHandler;
-import ru.crud.boot.service.AppService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,24 +9,25 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.crud.boot.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AppService appService;
+    private final UserService userService;
     private final LoginSuccessHandler loginSuccessHandler;
     private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(@Qualifier("appService") AppService appService, LoginSuccessHandler loginSuccessHandler, PasswordEncoder passwordEncoder) {
-        this.appService = appService;
+    public SecurityConfig(@Qualifier("userService") UserService userService, LoginSuccessHandler loginSuccessHandler, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
         this.loginSuccessHandler = loginSuccessHandler;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appService);
+        auth.userDetailsService(userService);
     }
 
     @Override
@@ -53,4 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout");
     }
+//    @Bean
+//    PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(12);
+//    }
+
 }
