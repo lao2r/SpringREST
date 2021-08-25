@@ -30,10 +30,8 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        List<Role> listRoles = roleService.findAllRoles();
-
         model.addAttribute("userForm", new User());
-        model.addAttribute("listRoles", listRoles);
+        model.addAttribute("listRoles", roleService.findAllRoles());
         return "registration";
     }
 
@@ -52,7 +50,6 @@ public class RegistrationController {
 
         userForm.setRoles(roles);
         userService.saveUser(userForm);
-
         return "/login";
     }
 }

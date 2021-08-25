@@ -60,11 +60,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(Long id) throws NoSuchElementException {
-        User user = findUserById(id);
-        if (user == null) {
-            throw new NoSuchElementException("User not found");
-        }
-        userRepository.delete(user);
+        userRepository.delete(findUserById(id));
     }
 
     @Override
@@ -73,7 +69,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User with email: %s not found", email));
         }
-        System.out.println(user.toString());
+        System.out.println(user);
         return user;
     }
 }

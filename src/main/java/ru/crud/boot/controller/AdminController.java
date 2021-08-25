@@ -32,9 +32,7 @@ public class AdminController {
 
     @GetMapping("/user-create")
     public String createUserForm(@ModelAttribute("user") User user, Model model) {
-        List<Role> listRoles = roleService.findAllRoles();
-
-        model.addAttribute("listRoles", listRoles);
+        model.addAttribute("listRoles", roleService.findAllRoles());
         return "/user-create";
     }
 
@@ -59,11 +57,8 @@ public class AdminController {
 
     @GetMapping("/user-update/{id}")
     public String updateUserForm(@PathVariable(value = "id", required = true) Long id, Model model) {
-        User user = userService.findUserById(id);
-        List<Role> listRoles = roleService.findAllRoles();
-
-        model.addAttribute("user", user);
-        model.addAttribute("listRoles", listRoles);
+        model.addAttribute("user", userService.findUserById(id));
+        model.addAttribute("listRoles", roleService.findAllRoles());
         return "/user-update";
     }
 
@@ -77,13 +72,7 @@ public class AdminController {
 
         user.setRoles(roles);
         userService.updateUser(user);
-        System.out.println("I'm here");
         return "redirect:/admin";
     }
 
-    private void setUserId(User user) {
-        for (Role role : user.getRoles()) {
-            role.setId(roleService.findRoleByName(role.getName()).getId());
-        }
-    }
 }
