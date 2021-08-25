@@ -1,6 +1,7 @@
 package ru.crud.boot.service;
 
 import org.hibernate.annotations.Proxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.crud.boot.model.User;
 import ru.crud.boot.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +17,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

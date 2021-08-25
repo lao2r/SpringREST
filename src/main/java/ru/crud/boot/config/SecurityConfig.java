@@ -19,12 +19,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userService;
     private final LoginSuccessHandler loginSuccessHandler;
-    private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(@Qualifier("userServiceImpl") UserServiceImpl userService, LoginSuccessHandler loginSuccessHandler, PasswordEncoder passwordEncoder) {
+    public SecurityConfig(@Qualifier("userServiceImpl") UserServiceImpl userService, LoginSuccessHandler loginSuccessHandler) {
         this.userService = userService;
         this.loginSuccessHandler = loginSuccessHandler;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -52,6 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout");
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
     }
 
 }
