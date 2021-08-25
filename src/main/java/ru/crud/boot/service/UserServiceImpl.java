@@ -1,5 +1,6 @@
 package ru.crud.boot.service;
 
+import org.hibernate.annotations.Proxy;
 import ru.crud.boot.model.User;
 import ru.crud.boot.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +16,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleServiceImpl roleService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmail(String email) {
-        return findAllUsers().stream().filter(u -> u.getEmail().equals(email)).findAny().orElse(null);
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -67,7 +66,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = findUserByEmail(email);
-        System.out.println(user);
         return user;
     }
 }

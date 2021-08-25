@@ -14,5 +14,4 @@ public interface RoleService {
 
     void saveRole(Role role);
 
-
 }

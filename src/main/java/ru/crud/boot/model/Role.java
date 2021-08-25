@@ -2,12 +2,9 @@ package ru.crud.boot.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Table(name = "roles")
@@ -23,6 +20,9 @@ public class Role implements GrantedAuthority {
     @Column(name = "name", unique = true)
     private String name;
 
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
+
     public Role() {
     }
 
@@ -35,17 +35,4 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
-
-        return Objects.equals(id, role.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 1179619963;
-    }
 }

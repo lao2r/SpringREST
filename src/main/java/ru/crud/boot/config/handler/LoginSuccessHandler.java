@@ -18,6 +18,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
+        System.out.println("555555555555555");
         if (roles.contains("ROLE_ADMIN")) {
             setDefaultTargetUrl("/admin");
         } else if (roles.contains("ROLE_USER")) {
