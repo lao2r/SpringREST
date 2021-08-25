@@ -10,8 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.crud.boot.service.RoleService;
-import ru.crud.boot.service.UserService;
+import ru.crud.boot.service.RoleServiceImpl;
+import ru.crud.boot.service.UserServiceImpl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,10 +20,10 @@ import java.util.Set;
 @Controller
 public class RegistrationController {
 
-    private final UserService userService;
-    private final RoleService roleService;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
-    public RegistrationController(UserService userService, RoleService roleService) {
+    public RegistrationController(UserServiceImpl userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }

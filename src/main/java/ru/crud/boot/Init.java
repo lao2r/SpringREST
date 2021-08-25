@@ -4,8 +4,8 @@ package ru.crud.boot;
 import ru.crud.boot.model.Role;
 import ru.crud.boot.model.User;
 import org.springframework.stereotype.Component;
-import ru.crud.boot.service.RoleService;
-import ru.crud.boot.service.UserService;
+import ru.crud.boot.service.RoleServiceImpl;
+import ru.crud.boot.service.UserServiceImpl;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -15,10 +15,10 @@ import java.util.Set;
 
 public class Init {
 
-    private final RoleService roleService;
-    private final UserService userService;
+    private final RoleServiceImpl roleService;
+    private final UserServiceImpl userService;
 
-    public Init(RoleService roleService, UserService userService) {
+    public Init(RoleServiceImpl roleService, UserServiceImpl userService) {
         this.roleService = roleService;
         this.userService = userService;
     }

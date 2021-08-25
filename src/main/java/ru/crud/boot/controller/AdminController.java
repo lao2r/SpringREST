@@ -5,8 +5,8 @@ import ru.crud.boot.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.crud.boot.service.RoleService;
-import ru.crud.boot.service.UserService;
+import ru.crud.boot.service.RoleServiceImpl;
+import ru.crud.boot.service.UserServiceImpl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.Set;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
-    private final RoleService roleService;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }

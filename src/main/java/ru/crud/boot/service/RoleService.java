@@ -1,36 +1,18 @@
 package ru.crud.boot.service;
 
 import ru.crud.boot.model.Role;
-import ru.crud.boot.repository.RoleRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
-public class RoleService {
+public interface RoleService {
 
-    private final RoleRepository roleRepository;
+    List<Role> findAllRoles();
 
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+    Role findRoleById(Long id);
 
-    public List<Role> findAllRoles() {
-        return roleRepository.findAll();
-    }
+    Role findRoleByName(String role);
 
-    public Role findRoleById(Long id) {
-        return roleRepository.findById(id).get();
-    }
+    void saveRole(Role role);
 
-    public Role findRoleByName(String role) {
-        return findAllRoles().stream().filter(r -> r.getName().equals(role)).findAny().orElse(null);
-    }
-
-    public void saveRole(Role role) {
-        roleRepository.save(role);
-    }
 
 }
