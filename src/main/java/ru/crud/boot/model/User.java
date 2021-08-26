@@ -32,8 +32,6 @@ public class User implements UserDetails {
     @Column(name = "email")
     public String email;
 
-
-
     @Column(name = "password")
     public String password;
 

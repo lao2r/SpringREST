@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <title>User Manager</title>
+
+
+
 </head>
 <body>
 <div align="center">
@@ -27,23 +28,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}">ID</td>
-            <td th:text="${user.firstName}">First Name</td>
-            <td th:text="${user.lastName}">Last Name</td>
-            <td th:text="${user.email}">Email</td>
+        <tr th:each="user :${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
             <td>
                 <th:block th:each="role : ${user.roles}">
                     &nbsp;<span th:text="${role.name.substring(5)}"></span>
                 </th:block>
             </td>
             <td>
-                <form th:method="GET" th:action="@{admin/user-update/{id}(id=${user.getId()})}">
-                    <input th:type="submit" value="Edit">
-                </form>
-                <form th:method="DELETE" th:action="@{admin/user-delete/{id}(id=${user.getId()})}">
-                    <input th:type="submit" value="Delete">
-                </form>
+                <button type="button" class="btn btn-info  eBtn">Edit</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger dBtn">Delete</button>
             </td>
         </tr>
         </tbody>

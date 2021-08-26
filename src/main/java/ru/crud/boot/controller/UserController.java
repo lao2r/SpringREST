@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-    @GetMapping("")
+    @GetMapping("/{id}")
     public String userInfo(@CurrentSecurityContext(expression = "authentication.principal") User principal, Model model) {
         model.addAttribute("user", principal);
-        return "user-info";
+        return "index";
     }
 }
