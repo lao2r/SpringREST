@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import ru.crud.boot.model.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             Long id = ((User) authentication.getPrincipal()).getId();
             response.sendRedirect("/user/" + id);
         }
-
             super.onAuthenticationSuccess(request, response, authentication);
         }
     }

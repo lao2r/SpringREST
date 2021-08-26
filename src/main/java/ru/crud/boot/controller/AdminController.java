@@ -4,7 +4,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.crud.boot.model.Role;
 import ru.crud.boot.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,6 @@ import ru.crud.boot.service.RoleServiceImpl;
 import ru.crud.boot.service.UserServiceImpl;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -38,7 +34,6 @@ public class AdminController {
         model.addAttribute("listRoles", roleService.findAllRoles());
         return "index";
     }
-
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user, @RequestParam("listOfRoles") Long[] roleIds) {
