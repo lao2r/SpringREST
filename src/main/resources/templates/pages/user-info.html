@@ -1,4 +1,4 @@
-<h1>User information page</h1>
+<h1>User info</h1>
 
 <div class="card">
     <div class="card-header">
@@ -19,7 +19,7 @@
                 </thead>
 
                 <tbody>
-                <tr>
+                <tr id="usersInfo">
                     <td th:text="${#authentication.getPrincipal().getId()}">id</td>
                     <td th:text="${#authentication.getPrincipal().getFirstName()}">first_name</td>
                     <td th:text="${#authentication.getPrincipal().getLastName()}">last_name</td>

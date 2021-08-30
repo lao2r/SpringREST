@@ -1,62 +1,56 @@
 package ru.crud.boot.controller;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import ru.crud.boot.model.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.crud.boot.service.RoleServiceImpl;
-import ru.crud.boot.service.UserServiceImpl;
+import ru.crud.boot.model.User;
+import ru.crud.boot.service.UserService;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.List;
 
-@Controller
-@RequestMapping("/admin")
+@RestController
+@RequestMapping("/api/admin")
 public class AdminController {
 
-    private final UserServiceImpl userService;
-    private final RoleServiceImpl roleService;
+    private final UserService userService;
 
-    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @GetMapping("/users")
-    public String findAll(Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", user);
-        model.addAttribute("users", userService.findAllUsers());
-        model.addAttribute("listRoles", roleService.findAllRoles());
-        return "index";
+    public List<User> findAllUsers() {
+        return userService.findAllUsers();
     }
 
-    @PostMapping()
-    public String create(@ModelAttribute("user") User user, @RequestParam("listOfRoles") Long[] roleIds) {
-        user.setRoles(Arrays.stream(roleIds).map(roleService::findRoleById).collect(Collectors.toSet()));
+    @GetMapping("/users/{id}")
+    public User findUserById(@PathVariable Long id) {
+        return userService.findUserById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> saveUser(@RequestBody User user) {
         userService.saveUser(user);
-        return "redirect:/admin/users";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PatchMapping("/users/{id}")
-    public String update(@ModelAttribute("user") User user, @RequestParam(value = "listOfRoles") Long[] rolesId, @AuthenticationPrincipal User authenticated) {
-        user.setRoles(Arrays.stream(rolesId).map(roleService::findRoleById).collect(Collectors.toSet()));
-        if (user.getUsername().equals(authenticated.getUsername())) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+    @PutMapping("/users/{id}")
+    public ResponseEntity<Void> updateUser(@RequestBody User user) {
+        System.out.println("Update user in controller");
         userService.updateUser(user);
-        return "redirect:/admin/users";
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 
-    @DeleteMapping("/users/{id}/delete")
-    public String delete(@PathVariable("id") Long id) {
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
-        return "redirect:/admin/users";
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
 }

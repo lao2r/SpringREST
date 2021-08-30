@@ -1,6 +1,5 @@
 package ru.crud.boot.service;
 
-import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.crud.boot.model.User;
 import ru.crud.boot.repository.UserRepository;
@@ -39,6 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
+        System.out.println(user);
         user.setEnabled(true);
         userRepository.save(user);
     }

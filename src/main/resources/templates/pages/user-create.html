@@ -1,29 +1,46 @@
-<div class="col-md bg-white border">
-    <form class="offset-md-4 col-md-4 mt-3 mb-4" th:align="center"
-          th:action="@{/admin}"
-          th:object="${user}" method="post">
-        <label for="firstName"><b>First name</b></label>
-        <input th:name="firstName" th:type="text" class="form-control" id="firstName"/>
-        <br>
-        <label for="lastName"><b>Last name</b></label>
-        <input th:name="lastName" th:type="text" class="form-control" id="lastName"/>
-        <br>
-        <label for="email"><b>E-mail</b></label>
-        <input th:name="email" th:type="text" class="form-control" id="email"/>
-        <br>
-        <label for="password"><b>Password</b></label>
-        <input th:name="password" th:type="password" class="form-control" id="password"/>
-        <br>
-        <label for="multiSelect">Role</label>
-        <select required class="form-control" multiple
-                name="listOfRoles"
-                id="multiSelect" size="2">
-            <option th:each="role : ${listRoles}"
-                    th:value="${role.getId()}"
-                    th:text="${role.getAuthority()}">
-            </option>
-        </select>
-        <br>
-        <button th:type="submit" class="btn btn-success" value="Add User">Add new User</button>
-    </form>
+<div class="card">
+    <div class="card-header">
+        Add new user
+    </div>
+
+    <div class="card-body">
+        <div class="row justify-content-center align-items-center">
+
+            <form class="text-center" id="userCreateForm">
+
+                <div class="form-group font-weight-bold">
+                    <label for="firstName">First name</label>
+                    <input required class="form-control" id="firstName"
+                           placeholder="First Name" type="text"/>
+
+
+                    <label for="lastName">Last name</label>
+                    <input required class="form-control" id="lastName"
+                           placeholder="Last name" type="text"/>
+
+
+                    <label for="email">Email</label>
+                    <input required class="form-control" id="email"
+                           placeholder="Email" type="text"/>
+
+
+                    <label for="password">Password</label>
+                    <input required class="form-control" id="password"
+                           placeholder="Password" type="password"/>
+
+
+                    <label for="multiSelect">Role</label>
+
+                    <select required class="form-control" multiple
+                            name="roles"
+                            id="multiSelect" size="2">
+                    </select>
+
+
+                </div>
+                <button id="create_user" class="btn btn-success">Add new user</button>
+            </form>
+
+        </div>
+    </div>
 </div>
