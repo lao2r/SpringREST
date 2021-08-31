@@ -1,47 +1,42 @@
-async function addUser() {
-
-    let userCreateForm = $("#userCreateForm");
-    userCreateForm.find('#multiSelect')
-        .find('option')
-        .remove()
-        .end()
-
-    const rolesResponse = await roleService.findAll();
-    const rolesJson = rolesResponse.json();
-
-    rolesJson.then(roles => {
-        roles.forEach(role => {
-            userCreateForm.find('#multiSelect').append(new Option(role.authority.substring(5), role.id));
-        });
-    });
-
-    $('#create_user').click(async function (e) {
-        e.preventDefault()
-
-        let {firstName, lastName, email, password, listRoles} = getFormValues(userCreateForm);
-
-        const roles = listRoles.map((role) => ({id: role.value}));
-        let data = {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            roles: roles,
-        };
-
-        const userResponse = await http.fetch('/api/admin', {
-            method: 'POST',
-            body: JSON.stringify(data)
-        });
-
-        if (userResponse.status === 201) {
-            viewAllUsers();
-            $('#v-pills-tabContent a[href="#nav-home"]').trigger('click');
-
-            $('#userCreateForm').find('input:text, input:password, select')
-                .each(function () {
-                    $(this).val('');
-                });
+function addUser() {
+    let roleList = () => {
+        let array = []
+        let options = document.querySelector('#roles0').options
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                let role = {id: options[i].value, name: options[i].text}
+                array.push(role)
+            }
         }
+        return array;
+    }
+
+    let user = {
+        firstName: document.getElementById("firstName0").value,
+        lastName: document.getElementById("lastName0").value,
+        email: document.getElementById("email0").value,
+        password: document.getElementById("password0").value,
+        roles: roleList()
+    }
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json; charset=utf-8');
+    let request = new Request('/api/admin', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(user)
     });
+    console.log(user);
+
+    fetch(request).then((response) => {
+        response.json().then((userAdd) => {
+            allUser.push(userAdd)
+            addUserForTable(userAdd)
+            console.log(userAdd)
+        })
+
+        console.log(allUser)
+        $('#v-pills-tabContent a[href="#nav-users-table"]').trigger('click');
+        userClearModal()
+    })
 }

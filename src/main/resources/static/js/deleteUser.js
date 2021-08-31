@@ -1,24 +1,29 @@
-async function deleteUser(modal, id) {
-    const userResponse = await http.fetch('/api/admin/users/' + id);
-    const userJson = userResponse.json();
+function deleteUserById(id) {
+    fetch("/api/admin/users/" + id, {method: "GET", dataType: 'json',})
+        .then((response) => {
+            response.json().then((user) => {
+                $('#id2').val(user.id)
+                $('#firstName2').val(user.firstName)
+                $('#lastName2').val(user.lastName)
+                $('#email2').val(user.email)
+                $('#password2').val(user.password)
+                $('#roles2').val(user.roles)
+            })
+        })
+}
 
-    modifyModal(modal, 'Delete');
-    userJson.then(user => {
-        modal.find('#id').val(user.id);
-        modal.find('#firstName').val(user.firstName);
-        modal.find('#lastName').val(user.lastName);
-        modal.find('#email').val(user.email);
-        modal.find('#multiSelect').append(user.roles.map((item) => new Option(item.role, item.id)));
+function remove() {
+    let userId = ($('#id2').val());
+    console.log(userId)
+    fetch("/api/admin/users/" + userId, {method: "DELETE"})
+        .then((response) => {
+            userInfo.empty()
+            allUser = allUser.filter(user => user.id !== Number(userId))
+            console.log(allUser)
 
-    });
-
-    $('#deleteUserButton').click(async function (e) {
-        const bookResponse = await http.fetch('/api/admin/users/' + id, {
-            method: 'DELETE'
-        });
-        if (bookResponse.status === 204) {
-            viewAllUsers();
-            $('#defaultModal').modal('hide');
-        }
-    });
+            allUser.forEach((user) => {
+                addUserForTable(user)
+            })
+            $('#modal-delete').modal('hide');
+        })
 }

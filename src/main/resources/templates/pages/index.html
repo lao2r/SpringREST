@@ -38,25 +38,25 @@
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
-                                       href="#nav-home"
+                                       href="#nav-users-table"
                                        role="tab"
                                        aria-controls="nav-home" aria-selected="true">Users Table</a>
                                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
-                                       href="#nav-profile"
+                                       href="#nav-user-new-pane"
                                        role="tab"
                                        aria-controls="nav-profile" aria-selected="false">New User</a>
                                 </div>
                             </nav>
 
                             <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                     aria-labelledby="nav-home-tab">
+                                <div class="tab-pane fade show active" id="nav-users-table" role="tabpanel"
+                                     aria-labelledby="nav-user-tab">
                                     <th:block th:include="user-list"></th:block>
                                 </div>
 
-                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                     aria-labelledby="nav-profile-tab">
-                                    <th:block th:include="user-create"></th:block>
+                                <div class="tab-pane fade" id="nav-user-new-pane" role="tabpanel"
+                                     aria-labelledby="nav-user-new">
+                                    <th:block th:include="user-form"></th:block>
                                 </div>
                             </div>
                         </div>
@@ -72,8 +72,8 @@
     </div>
 </div>
 
-<div th:replace="modals/default-modal :: defaultModal"></div>
-<div th:replace="user-form :: userForm"></div>
+<div th:replace="modals/modal-edit :: #modal-edit"></div>
+<div th:replace="modals/modal-delete :: #modal-delete"></div>
 <div th:replace="import :: scripts"></div>
 
 </body>

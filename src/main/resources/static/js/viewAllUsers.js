@@ -1,21 +1,40 @@
-async function viewAllUsers() {
-    $('#usersTable tbody').empty();
-    const usersResponse = await http.fetch('/api/admin/users');
-    const jsonUser = usersResponse.json();
-    jsonUser.then(users => {
-        users.forEach(user => {
-            let userInfo = `$(<tr>
-                        <th >${user.id}</th>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td>${user.email}</td>                             
-                        <td>${user.roles.map((item) => item.name.substring(5)).join(" ")}</td>                      
-                            
-                        <td><button class="btn btn-info " data-id="${user.id}" data-action="editUser" data-toggle="modal" data-target="#defaultModal">Edit</button></td>       
-                        <td> <button class="btn btn-danger" data-id="${user.id}" data-action="deleteUser" data-toggle="modal" data-target="#defaultModal">Delete</button></td>      
-                        
-                    </tr>)`;
-            $('#usersTable tbody').append(userInfo);
-        });
+let userInfo = $('#tBody')
+let allUser = []
+
+getAllUser()
+
+function getAllUser() {
+    fetch("/api/admin/users").then((response) => {
+        console.log(response.statusText + response.status)
+        if (response.ok) {
+            response.json().then((users) => {
+                users.forEach((user) => {
+                    console.log(user)
+                    addUserForTable(user)
+                    allUser.push(user)
+                });
+            });
+            console.log(allUser)
+        } else {
+            console.error(response.statusText + response.status)
+        }
     });
+}
+
+function addUserForTable(user) {
+    userInfo.append(
+        '<tr>' +
+        '<td>' + user.id + '</td>' +
+        '<td>' + user.firstName + '</td>' +
+        '<td>' + user.lastName + '</td>' +
+        '<td>' + user.email + '</td>' +
+        '<td>' + user.roles.map(roleUser => roleUser.name.substring(5)) + '</td>' +
+        '<td>' +
+        '<button onclick="editUserById(' + user.id + ')" class="btn btn-info edit-btn" data-toggle="modal" data-target="#modal-edit"' +
+        '>Edit</button></td>' +
+        '<td>' +
+        '<button onclick="deleteUserById(' + user.id + ')" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete"' +
+        '>Delete</button></td>' +
+        '</tr>'
+    )
 }

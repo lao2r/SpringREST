@@ -1,6 +1,11 @@
 package ru.crud.boot.service;
 
+import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ru.crud.boot.model.User;
 import ru.crud.boot.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,14 +49,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         String oldPassword = userRepository.findById(user.getId()).get().getPassword();
         String newPassword = user.getPassword();
 
@@ -61,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
         System.out.println(user);
         user.setEnabled(true);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

@@ -19,7 +19,7 @@
                 </thead>
 
                 <tbody>
-                <tr id="usersInfo">
+                <tr id="user_info_table">
                     <td th:text="${#authentication.getPrincipal().getId()}">id</td>
                     <td th:text="${#authentication.getPrincipal().getFirstName()}">first_name</td>
                     <td th:text="${#authentication.getPrincipal().getLastName()}">last_name</td>
@@ -35,7 +35,6 @@
                 </tbody>
             </table>
         </div>
-        <br><br>
     </div>
 </div>
 

@@ -1,0 +1,52 @@
+<div class="modal fade" id="modal-delete" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <div class="row justify-content-center align-items-center">
+                        <form>
+                            <div class="form-group text-center font-weight-bold">
+                                <label for="id2" >ID
+                                    <input type="number" class="form-control form-control-sm"
+                                           name="id" id="id2" readonly>
+                                </label>
+                                <br>
+                                <label for="firstName2">First name
+                                    <input type="text" class="form-control form-control-sm"
+                                           name="firstName" id="firstName2" readonly>
+                                </label>
+                                <br>
+                                <label for="lastName2">Last name
+                                    <input type="text" class="form-control form-control-sm"
+                                           name="lastName" id="lastName2" readonly>
+                                </label>
+                                <br>
+                                <label for="email2">Email
+                                    <input type="email" class="form-control form-control-sm"
+                                           name="email" id="email2" readonly>
+                                </label>
+                                <br>
+                                <label for="roles2">Role
+                                    <select class="form-control form-control-sm" size="2"
+                                            name="checkBoxRoles" id="roles2" readonly>
+                                        <option>ADMIN</option>
+                                        <option>USER</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                <button onclick="remove()" type="submit" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,7 +19,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if (roles.contains("ROLE_ADMIN")) {
-            response.sendRedirect("/admin/users");
+            response.sendRedirect("/users");
         } else if (roles.contains("ROLE_USER")) {
             Long id = ((User) authentication.getPrincipal()).getId();
             response.sendRedirect("/user/" + id);

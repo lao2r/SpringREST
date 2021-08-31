@@ -1,6 +1,5 @@
 package ru.crud.boot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,24 +29,18 @@ public class AdminController {
     }
 
     @PostMapping
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
-        userService.saveUser(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public User saveUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<Void> updateUser(@RequestBody User user) {
-        System.out.println("Update user in controller");
-        userService.updateUser(user);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
-
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();

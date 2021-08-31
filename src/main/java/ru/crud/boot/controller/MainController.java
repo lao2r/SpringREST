@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.crud.boot.service.RoleService;
 
 @Controller
-@RequestMapping("/admin")
 public class MainController {
 
     private final RoleService roleService;
