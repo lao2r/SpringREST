@@ -1,9 +1,9 @@
 package ru.crud.boot.service;
 
-import ru.crud.boot.model.Role;
-import ru.crud.boot.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.crud.boot.model.Role;
+import ru.crud.boot.repository.RoleRepository;
 
 import java.util.List;
 

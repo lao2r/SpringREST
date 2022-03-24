@@ -1,9 +1,9 @@
 package ru.crud.boot;
 
 
+import org.springframework.stereotype.Component;
 import ru.crud.boot.model.Role;
 import ru.crud.boot.model.User;
-import org.springframework.stereotype.Component;
 import ru.crud.boot.service.RoleServiceImpl;
 import ru.crud.boot.service.UserServiceImpl;
 
@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-
 public class Init {
 
     private final RoleServiceImpl roleService;
